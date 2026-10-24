@@ -1,5 +1,5 @@
 import { ContactForm } from "@/components/ContactForm";
-import { IconMail, IconPhone } from "@/components/Icons";
+import { PageIntro } from "@/components/PageIntro";
 import { SITE } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -13,33 +13,25 @@ export const metadata = pageMeta({
 export default function ContactPage() {
   return (
     <>
-      <section className="border-b border-stone-200 bg-stone-50">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-700">Contact</p>
-          <h1 className="mt-3 max-w-3xl text-4xl sm:text-5xl">Book a free consultation</h1>
-          <p className="mt-6 max-w-2xl text-lg">Tell us about your device and what you need. We'll respond by email, usually within one business day.</p>
-        </div>
-      </section>
-      <div className="mx-auto grid max-w-6xl gap-14 px-5 py-16 sm:px-8 md:grid-cols-[1.5fr_1fr] md:py-24">
-        <div className="relative">
-          <h2 className="sr-only">Send a message</h2>
+      <PageIntro label="Contact" title="Book a free consultation">
+        <p>Tell us about your device and what you need. We will reply by email, usually within one business day.</p>
+      </PageIntro>
+      <div className="wrap grid gap-14 py-14 md:py-20 lg:grid-cols-[12rem_1fr_17rem] lg:gap-12">
+        <p className="label pt-2">Send a message</p>
+        <div className="relative max-w-2xl">
           <ContactForm />
         </div>
-        <aside aria-label="Direct contact" className="space-y-8 md:pt-2">
-          <div className="flex gap-4">
-            <IconMail className="mt-1 h-6 w-6 shrink-0 text-teal-700" />
-            <div>
-              <h2 className="font-sans! text-sm! font-semibold uppercase tracking-[0.14em]">Email</h2>
-              <a href={`mailto:${SITE.email}`} className="mt-1 block break-all text-lg text-navy-900 underline underline-offset-4 hover:text-teal-700">{SITE.email}</a>
+        <aside aria-label="Direct contact" className="lg:col-start-3 lg:row-start-1">
+          <dl className="border-t-2 border-ink">
+            <div className="border-b border-rule py-4">
+              <dt className="label">Email</dt>
+              <dd className="mt-1"><a href={`mailto:${SITE.email}`} className="break-all font-serif text-xl text-ink">{SITE.email}</a></dd>
             </div>
-          </div>
-          <div className="flex gap-4">
-            <IconPhone className="mt-1 h-6 w-6 shrink-0 text-teal-700" />
-            <div>
-              <h2 className="font-sans! text-sm! font-semibold uppercase tracking-[0.14em]">Phone</h2>
-              <a href={SITE.phoneHref} className="mt-1 block text-lg text-navy-900 underline underline-offset-4 hover:text-teal-700">{SITE.phone}</a>
+            <div className="border-b border-rule py-4">
+              <dt className="label">Phone</dt>
+              <dd className="mt-1"><a href={SITE.phoneHref} className="font-serif text-xl text-ink">{SITE.phone}</a></dd>
             </div>
-          </div>
+          </dl>
         </aside>
       </div>
     </>

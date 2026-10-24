@@ -1,6 +1,6 @@
-import { CtaBand } from "@/components/CtaBand";
-import { PillarDetail } from "@/components/ServiceCard";
-import { Reveal } from "@/components/Reveal";
+import { Closing } from "@/components/Closing";
+import { DesignControlThread, RegulatoryPathway } from "@/components/Diagrams";
+import { PageIntro } from "@/components/PageIntro";
 import { JsonLd } from "@/components/JsonLd";
 import { PILLARS } from "@/lib/site";
 import { servicesSchema } from "@/lib/schema";
@@ -16,26 +16,41 @@ export const metadata = pageMeta({
 export default function ServicesPage() {
   return (
     <>
-      <section className="border-b border-stone-200 bg-stone-50">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 md:py-24">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-700">Services</p>
-          <h1 className="mt-3 max-w-3xl text-4xl sm:text-5xl">Quality and regulatory support, end to end</h1>
-          <p className="mt-6 max-w-2xl text-lg">
-            Two service areas, one consultant. Work with Fieldstone on a single project or across the full product lifecycle. Regulatory outcomes depend on the device and on FDA's review, so we focus on clear strategy, solid evidence, and well-prepared submissions.
-          </p>
-        </div>
-      </section>
-      <div className="mx-auto max-w-6xl space-y-24 px-5 py-20 sm:px-8 md:py-24">
-        {PILLARS.map((p) => (
-          <Reveal key={p.id}>
-            <PillarDetail pillar={p} />
-          </Reveal>
-        ))}
-      </div>
-      <CtaBand title="Not sure which service fits?" text="Describe where you are and we'll help you work out the next sensible step. The first conversation is free." />
-      {servicesSchema.map((s) => (
-        <JsonLd key={s.name} data={s} />
+      <PageIntro label="Services" title="Quality and regulatory support, from first procedures to submission">
+        <p>
+          Two service areas, one consultant. Engage Fieldstone for a single project or across the product lifecycle. Regulatory outcomes depend on the device and on FDA's review, so the focus is clear strategy, solid evidence, and well-prepared submissions.
+        </p>
+      </PageIntro>
+
+      {PILLARS.map((p, i) => (
+        <section
+          key={p.id}
+          id={p.id}
+          aria-labelledby={`${p.id}-h`}
+          className={`scroll-mt-20 border-b border-rule ${i % 2 ? "bg-paper-deep" : ""}`}
+        >
+          <div className="wrap grid gap-6 py-14 lg:grid-cols-[12rem_1fr] lg:gap-12 md:py-20">
+            <p className="label pt-2">0{i + 1} / {i === 0 ? "Quality" : "Regulatory"}</p>
+            <div>
+              <h2 id={`${p.id}-h`} className="text-[1.9rem] sm:text-4xl">{p.title}</h2>
+              <p className="mt-4 max-w-[36rem] text-lg">{p.summary}</p>
+              {i === 0 ? <DesignControlThread /> : <RegulatoryPathway />}
+              <ol className="rows mt-12">
+                {p.items.map((s, n) => (
+                  <li key={s.name} className="grid gap-x-8 gap-y-2 py-5 sm:grid-cols-[3rem_1fr] lg:grid-cols-[3rem_1fr_1.25fr]">
+                    <span className="label pt-1.5">{i + 1}.{n + 1}</span>
+                    <h3 className="text-[1.3rem] leading-snug">{s.name}</h3>
+                    <p className="text-[0.98rem] sm:col-start-2 lg:col-start-auto">{s.description}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
       ))}
+
+      <Closing title="Not sure which service fits?" text="Describe where you are and we will work out the next sensible step together. The first conversation is free." />
+      {servicesSchema.map((s) => <JsonLd key={s.name} data={s} />)}
     </>
   );
 }

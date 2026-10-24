@@ -1,41 +1,35 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { StoneCourse } from "./StoneCourse";
 import { NAV, SITE } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="on-dark bg-navy-950 text-stone-300">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="on-ink bg-ink text-[#c9d1d9]">
+      <StoneCourse tone="ink" />
+      <div className="wrap grid gap-10 py-14 md:grid-cols-[1.2fr_0.8fr_1.5fr]">
         <div>
-          <Logo dark />
-          <p className="mt-5 max-w-sm text-[0.95rem] leading-relaxed text-stone-300">
-            Medical device quality assurance and regulatory affairs consulting.
-          </p>
+          <Logo onInk />
+          <p className="mt-5 max-w-xs text-[0.95rem]">Medical device quality assurance and regulatory affairs consulting.</p>
         </div>
         <nav aria-label="Footer">
-          <h2 className="font-sans! text-xs! font-semibold uppercase tracking-[0.18em] text-teal-300!">Explore</h2>
+          <p className="label">Pages</p>
           <ul className="mt-4 space-y-2">
             {NAV.map((n) => (
-              <li key={n.href}>
-                <Link href={n.href} className="text-[0.95rem] hover:text-white hover:underline underline-offset-4">
-                  {n.label}
-                </Link>
-              </li>
+              <li key={n.href}><Link href={n.href} className="text-white no-underline hover:underline">{n.label}</Link></li>
             ))}
           </ul>
         </nav>
         <div>
-          <h2 className="font-sans! text-xs! font-semibold uppercase tracking-[0.18em] text-teal-300!">Contact</h2>
-          <ul className="mt-4 space-y-2 text-[0.95rem]">
-            <li><a href={`mailto:${SITE.email}`} className="hover:text-white hover:underline underline-offset-4">{SITE.email}</a></li>
-            <li><a href={SITE.phoneHref} className="hover:text-white hover:underline underline-offset-4">{SITE.phone}</a></li>
+          <p className="label">Contact</p>
+          <ul className="mt-4 space-y-2">
+            <li><a href={`mailto:${SITE.email}`} className="break-words text-white no-underline hover:underline">{SITE.email}</a></li>
+            <li><a href={SITE.phoneHref} className="text-white no-underline hover:underline">{SITE.phone}</a></li>
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10">
-        <p className="mx-auto max-w-6xl px-5 py-6 text-sm text-stone-300 sm:px-8">
-          © {SITE.year} Fieldstone Consultants, LLC. All rights reserved.
-        </p>
+      <div className="border-t border-white/15">
+        <p className="wrap py-5 text-sm">© {SITE.year} Fieldstone Consultants, LLC. All rights reserved.</p>
       </div>
     </footer>
   );

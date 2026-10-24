@@ -1,97 +1,116 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy-950: #0c1a29;
-  --color-navy-900: #12263a;
-  --color-navy-800: #1b3550;
-  --color-slate-700: #3b4a5a;
-  --color-slate-500: #5d6b7a;
-  --color-teal-700: #2a6468;
-  --color-teal-600: #2f6f73;
-  --color-teal-300: #8cc7c4;
-  --color-stone-50: #f7f5f1;
-  --color-stone-100: #efece6;
-  --color-stone-200: #dedad1;
-  --color-stone-300: #c9c4b8;
+  /* One ink, one paper family, one accent. */
+  --color-ink: #14202e;
+  --color-ink-soft: #2a3a4c;
+  --color-body: #364454;
+  --color-muted: #5b6672;
+  --color-paper: #f5f3ee;
+  --color-paper-deep: #ebe8e0;
+  --color-rule: #d6d1c5;
+  --color-accent: #2c6a6e;
+  --color-accent-deep: #1f5256;
+  --color-accent-light: #9ccdc9;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
-
-  --shadow-card: 0 1px 2px rgb(18 38 58 / 0.05), 0 8px 24px -12px rgb(18 38 58 / 0.12);
+  --font-sans: var(--f-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--f-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--f-mono), ui-monospace, monospace;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    background: var(--color-paper);
   }
   body {
-    background: #fff;
-    color: var(--color-slate-700);
+    background: var(--color-paper);
+    color: var(--color-body);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
-    line-height: 1.7;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3 {
     font-family: var(--font-serif);
-    color: var(--color-navy-900);
-    letter-spacing: -0.015em;
-    line-height: 1.15;
-    font-weight: 500;
+    font-optical-sizing: auto;
+    color: var(--color-ink);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
   }
+  p { text-wrap: pretty; }
+  a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
   :focus-visible {
-    outline: 3px solid var(--color-teal-600);
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
-    border-radius: 4px;
   }
-  .on-dark :focus-visible {
-    outline-color: var(--color-teal-300);
-  }
-  ::selection {
-    background: var(--color-teal-300);
-    color: var(--color-navy-950);
-  }
+  .on-ink :focus-visible { outline-color: var(--color-accent-light); }
+  ::selection { background: var(--color-accent-light); color: var(--color-ink); }
 }
 
-/* Stone motif: faceted, irregular hairline polygons. Decorative only. */
-.stone-lines {
-  background-image: url("/stone-pattern.svg");
-  background-size: 640px 640px;
-  background-repeat: repeat;
+@layer components {
+  .skip-link {
+    position: fixed; left: 1rem; top: 1rem; z-index: 60;
+    transform: translateY(-200%);
+    background: var(--color-ink); color: #fff; padding: 0.75rem 1rem;
+  }
+  .skip-link:focus { transform: none; }
+
+  /* Small mono labels, like a drawing's title block */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .on-ink .label { color: var(--color-accent-light); }
+
+  .wrap { margin-inline: auto; max-width: 72rem; padding-inline: 1.25rem; }
+  @media (min-width: 640px) { .wrap { padding-inline: 2rem; } }
+
+  /* Buttons: square, flat, one real hover change */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    min-height: 3rem; padding: 0.7rem 1.4rem;
+    background: var(--color-ink); color: #fff;
+    border: 1px solid var(--color-ink);
+    font-weight: 500; font-size: 1rem; text-decoration: none;
+    transition: background-color .2s, border-color .2s;
+  }
+  .btn:hover { background: var(--color-accent-deep); border-color: var(--color-accent-deep); }
+  .btn .arrow { transition: transform .2s; }
+  .btn:hover .arrow, .tlink:hover .arrow { transform: translateX(3px); }
+  .btn-paper { background: var(--color-paper); color: var(--color-ink); border-color: var(--color-paper); }
+  .btn-paper:hover { background: #fff; border-color: #fff; }
+
+  /* Text link with a real underline, used instead of a second button */
+  .tlink {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--color-ink); font-weight: 500;
+    text-decoration: underline; text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px; text-underline-offset: 0.3em;
+    transition: color .2s;
+  }
+  .tlink:hover { color: var(--color-accent-deep); }
+  .on-ink .tlink { color: #fff; text-decoration-color: var(--color-accent-light); }
+  .on-ink .tlink:hover { color: var(--color-accent-light); }
+
+  /* Ruled list rows */
+  .rows > * { border-top: 1px solid var(--color-rule); }
+  .rows > *:last-child { border-bottom: 1px solid var(--color-rule); }
+  .on-ink .rows > * { border-color: rgb(255 255 255 / 0.18); }
 }
 
-/* Fade-in on scroll. Content stays visible without JS or with reduced motion. */
+/* Motion: a single gentle fade on text blocks, nothing on load for the hero. */
 @media (prefers-reduced-motion: no-preference) {
-  .js .reveal {
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .js .reveal.is-in {
-    opacity: 1;
-    transform: none;
-  }
-  .hero-in > * {
-    animation: rise 0.7s ease both;
-  }
-  .hero-in > *:nth-child(2) { animation-delay: 0.08s; }
-  .hero-in > *:nth-child(3) { animation-delay: 0.16s; }
-  .hero-in > *:nth-child(4) { animation-delay: 0.24s; }
-}
-@keyframes rise {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
+  .js .reveal { opacity: 0; transition: opacity .7s ease; }
+  .js .reveal.is-in { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-.stone-lines-light {
-  background-image: url("/stone-pattern-light.svg");
-  background-size: 640px 640px;
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }

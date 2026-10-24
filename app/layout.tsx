@@ -7,17 +7,26 @@ import { JsonLd } from "@/components/JsonLd";
 import { organizationSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 
-const fraunces = localFont({
-  src: "./fonts/Fraunces.woff2",
-  variable: "--font-fraunces",
-  weight: "100 900",
+const serif = localFont({
+  src: "./fonts/Newsreader.woff2",
+  weight: "200 800",
+  variable: "--f-serif",
   display: "swap",
 });
-const inter = localFont({
-  src: "./fonts/Inter.woff2",
-  variable: "--font-inter",
-  weight: "100 900",
+const sans = localFont({
+  src: [
+    { path: "./fonts/PlexSans-400.woff2", weight: "400" },
+    { path: "./fonts/PlexSans-500.woff2", weight: "500" },
+    { path: "./fonts/PlexSans-600.woff2", weight: "600" },
+  ],
+  variable: "--f-sans",
   display: "swap",
+});
+const mono = localFont({
+  src: [{ path: "./fonts/PlexMono-400.woff2", weight: "400" }],
+  variable: "--f-mono",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -28,21 +37,16 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export const viewport: Viewport = { themeColor: "#12263a" };
+export const viewport: Viewport = { themeColor: "#f5f3ee" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body>
-        <a
-          href="#main"
-          className="fixed left-4 top-4 z-50 -translate-y-20 rounded-md bg-navy-900 px-4 py-3 text-white focus:translate-y-0"
-        >
-          Skip to main content
-        </a>
+        <a href="#main" className="skip-link">Skip to main content</a>
         <Header />
         <main id="main" tabIndex={-1} className="outline-none">{children}</main>
         <Footer />

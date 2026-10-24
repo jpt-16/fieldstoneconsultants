@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #0c1a29;
+  --color-navy-900: #12263a;
+  --color-navy-800: #1b3550;
+  --color-slate-700: #3b4a5a;
+  --color-slate-500: #5d6b7a;
+  --color-teal-700: #2a6468;
+  --color-teal-600: #2f6f73;
+  --color-teal-300: #8cc7c4;
+  --color-stone-50: #f7f5f1;
+  --color-stone-100: #efece6;
+  --color-stone-200: #dedad1;
+  --color-stone-300: #c9c4b8;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --shadow-card: 0 1px 2px rgb(18 38 58 / 0.05), 0 8px 24px -12px rgb(18 38 58 / 0.12);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: #fff;
+    color: var(--color-slate-700);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    color: var(--color-navy-900);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    font-weight: 500;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-teal-600);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-teal-300);
+  }
+  ::selection {
+    background: var(--color-teal-300);
+    color: var(--color-navy-950);
+  }
+}
+
+/* Stone motif: faceted, irregular hairline polygons. Decorative only. */
+.stone-lines {
+  background-image: url("/stone-pattern.svg");
+  background-size: 640px 640px;
+  background-repeat: repeat;
+}
+
+/* Fade-in on scroll. Content stays visible without JS or with reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .js .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .hero-in > * {
+    animation: rise 0.7s ease both;
+  }
+  .hero-in > *:nth-child(2) { animation-delay: 0.08s; }
+  .hero-in > *:nth-child(3) { animation-delay: 0.16s; }
+  .hero-in > *:nth-child(4) { animation-delay: 0.24s; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.stone-lines-light {
+  background-image: url("/stone-pattern-light.svg");
+  background-size: 640px 640px;
+}
